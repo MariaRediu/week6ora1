@@ -4,29 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarStore
+namespace StoreAplication
 {
     class Program
     {
         static void Main(string[] args)
         {
-            IPerson alex;
-            IStore ford;
-            IVehicule focus;
+            ICustomer alex = new Customer("Alex");
 
-            IStore skoda;
-            IVehicule fabia;
-
-            IOrder order = ford.Enter(alex, focus);
-            IOrder orderf = skoda.Enter(alex, fabia);
-
-            if (order.develirydata<orderf.deliverydata)
-            { //deliveryorder(skodaorder)
-
-            }else
+            IStore ford = new Store("Ford","Bucuresti");
+            IVehicule focus = new Car
             {
-             //cancelorder(fabiaorder)
+                Producer =  "Ford" ,
+                Name = "Focus",
+                Price = 15000,
+                
+            };
+
+            IStore skoda = new Store("Skoda","Bucuresti");
+            IVehicule fabia = new Car  
+            {
+                Producer = "Skoda",
+                Name = "Fabia",
+                Price = 15000,
+
+            };
+            IOrder focusOrder = ford.EnterandBuy(alex, focus);
+
+            IOrder skodaOrder = skoda.EnterandBuy(alex, fabia);
+
+            if (focusOrder.DeliveryTime < skodaOrder.DeliveryTime)
+            {
+                skoda.CancelOrder(skodaOrder);
             }
+            else
+            {
+                ford.CancelOrder(focusOrder);
+            }
+
         }
     }
 }
