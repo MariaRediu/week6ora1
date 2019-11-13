@@ -4,25 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace week6ora1
+namespace StoreAplication
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var p1 = new Point(2,4);
-            var p2 = new Point(3, 7);
-            var p3 = p1 + p2;
-            var p4 = p3++;
+            ICustomer alex = new Customer("Alex");
 
-            Console.WriteLine(p3);
-      
-            Console.WriteLine(p4);
+            IStore ford = new Store("Ford","Bucuresti");
+            IVehicule focus = new Car
+            {
+                Producer =  "Ford" ,
+                Name = "Focus",
+                Price = 15000,
+                
+            };
 
-            Console.ReadLine();
-           
+            IStore skoda = new Store("Skoda","Bucuresti");
+            IVehicule fabia = new Car  
+            {
+                Producer = "Skoda",
+                Name = "Fabia",
+                Price = 15000,
+
+            };
+            IOrder focusOrder = ford.EnterandBuy(alex, focus);
+
+            IOrder skodaOrder = skoda.EnterandBuy(alex, fabia);
+
+            if (focusOrder.DeliveryTime < skodaOrder.DeliveryTime)
+            {
+                skoda.CancelOrder(skodaOrder);
+            }
+            else
+            {
+                ford.CancelOrder(focusOrder);
+            }
+
         }
     }
-
-    
 }
